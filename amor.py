@@ -3,15 +3,14 @@ from datetime import datetime
 import os
 
 def main(page: ft.Page):
-    # --- CONFIGURACIÓN DE LA PÁGINA (CENTRADO AUTOMÁTICO) ---
+    # --- CONFIGURACIÓN DE LA PÁGINA ---
     page.title = "Nuestro Aniversario"
-    page.bgcolor = "#FFF0F5" # Fondo rosita claro
+    page.bgcolor = "#FFF0F5" 
     page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 20
-    # Estos dos comandos fuerzan a que TODO esté siempre en el centro de la pantalla
+    # Alineación central forzada para evitar errores visuales
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    # Permitir scroll por si la pantalla del móvil es pequeña
     page.scroll = ft.ScrollMode.AUTO
     
     # --- TUS DATOS ---
@@ -23,12 +22,11 @@ def main(page: ft.Page):
         musica = ft.Audio(src="cancion.mp3", autoplay=True)
         page.overlay.append(musica)
     except:
-        pass # Si falla la música, que no rompa la app
+        pass 
 
     # --- NAVEGACIÓN ---
     def cambiar_pantalla(contenido_nuevo):
         page.clean()
-        # Al limpiar, a veces se pierde la alineación, así que la reforzamos
         page.vertical_alignment = ft.MainAxisAlignment.CENTER
         page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
         page.add(contenido_nuevo)
@@ -48,7 +46,8 @@ def main(page: ft.Page):
                 ft.Container(height=20),
                 ft.Container(
                     content=ft.Column([
-                        ft.Icon(name="timer", size=40, color="white"),
+                        # CORRECCIÓN: Quitamos 'name=' y dejamos solo el texto
+                        ft.Icon("timer", size=40, color="white"),
                         ft.Text(f"{dias_juntos} Días", size=40, weight="bold", color="white"),
                         ft.Text("juntos", size=15, color="white")
                     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
@@ -74,7 +73,8 @@ def main(page: ft.Page):
                 # Historia 1
                 ft.Container(
                     content=ft.Column([
-                        ft.Icon(name="airplane_ticket", size=40, color="blue"),
+                        # CORRECCIÓN: Quitamos 'name='
+                        ft.Icon("airplane_ticket", size=40, color="blue"),
                         ft.Text("Primer Viaje", weight="bold"),
                         ft.Text("Esa vez que nos perdimos...", size=14)
                     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
@@ -84,7 +84,8 @@ def main(page: ft.Page):
                 # Historia 2
                 ft.Container(
                     content=ft.Column([
-                        ft.Icon(name="restaurant", size=40, color="orange"),
+                        # CORRECCIÓN: Quitamos 'name='
+                        ft.Icon("restaurant", size=40, color="orange"),
                         ft.Text("Cena Especial", weight="bold"),
                         ft.Text("La mejor pizza.", size=14)
                     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
@@ -140,12 +141,13 @@ def main(page: ft.Page):
         spacing=10
     )
 
-    # PORTADA (Simplificada: Sin Stack, todo vertical)
+    # PORTADA
     pantalla_portada = ft.Column(
         [
             ft.Text("Feliz Aniversario", size=32, weight="bold", color="#D63384", text_align=ft.TextAlign.CENTER),
             ft.Container(height=10),
-            ft.Icon(name="favorite", size=100, color="red"), # Corazón gigante simple
+            # CORRECCIÓN: Quitamos 'name='
+            ft.Icon("favorite", size=100, color="red"),
             ft.Text("1 Año Juntos", size=20, weight="bold"),
             ft.Container(height=30),
             ft.ElevatedButton("ENTRAR ❤️", on_click=lambda _: cambiar_pantalla(pantalla_menu), bgcolor="#D63384", color="white", width=180, height=50)
@@ -154,7 +156,6 @@ def main(page: ft.Page):
         alignment=ft.MainAxisAlignment.CENTER
     )
 
-    # Iniciar con la portada
     page.add(pantalla_portada)
 
 if __name__ == "__main__":
