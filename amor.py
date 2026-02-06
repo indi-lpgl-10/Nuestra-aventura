@@ -5,25 +5,26 @@ import os
 def main(page: ft.Page):
     # --- CONFIGURACIÓN GENERAL ---
     page.title = "Nuestro 1er Año"
-    page.window_width = 390
-    page.window_height = 844
     page.bgcolor = "#FFF0F5"
     page.theme_mode = ft.ThemeMode.LIGHT
-
+    page.padding = 0 
+    
     # --- TUS DATOS ---
     FECHA_ANIVERSARIO = datetime(2025, 2, 14) 
     NOMBRE_PAREJA = "Mi Amor"
 
     # --- MÚSICA DE FONDO 🎵 ---
-    # Creamos el reproductor de audio
-    musica = ft.Audio(
-        src="cancion.mp3", # Busca este archivo en tu carpeta
-        autoplay=True,     # Empieza a sonar automático
-        volume=1.0,        # Volumen al 100%
-        balance=0,         # Balance centrado
-    )
-    # Lo añadimos a la "superposición" de la página (para que suene siempre)
-    page.overlay.append(musica) 
+    # Usamos un try/except por si acaso no encuentra el audio, que no falle la app
+    try:
+        musica = ft.Audio(
+            src="cancion.mp3", 
+            autoplay=True,     
+            volume=1.0,        
+            balance=0,         
+        )
+        page.overlay.append(musica)
+    except Exception:
+        print("No se pudo cargar la música")
 
     # --- NAVEGACIÓN ---
     def cambiar_pantalla(nueva_pantalla):
@@ -41,10 +42,12 @@ def main(page: ft.Page):
         
         pantalla = ft.Column(
             controls=[
+                ft.Container(height=20),
                 ft.Text("Nuestras Estadísticas 📈", size=25, weight="bold", color="#D63384"),
                 ft.Divider(),
                 ft.Container(
                     content=ft.Column([
+                        # CAMBIO: Icono como texto para evitar errores
                         ft.Icon("timer", size=40, color="white"),
                         ft.Text(f"{dias_juntos} Días", size=40, weight="bold", color="white"),
                         ft.Text("compartiendo risas", size=15, color="white")
@@ -68,11 +71,13 @@ def main(page: ft.Page):
     def ver_historias(e):
         pantalla = ft.Column(
             controls=[
+                ft.Container(height=20),
                 ft.Text("Nuestras Historias 📸", size=25, weight="bold", color="#D63384"),
                 
                 ft.Container(
                     content=ft.Column([
                         ft.Text("Nuestro primer viaje", size=18, weight="bold"),
+                        # CAMBIO: Icono como texto
                         ft.Icon("airplane_ticket", size=50, color="blue"), 
                         ft.Text("¿Recuerdas cuando nos perdimos en aquel pueblo?", size=14)
                     ]),
@@ -82,6 +87,7 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.Column([
                         ft.Text("Esa cena especial", size=18, weight="bold"),
+                        # CAMBIO: Icono como texto
                         ft.Icon("restaurant", size=50, color="orange"), 
                         ft.Text("La mejor pizza del mundo.", size=14)
                     ]),
@@ -102,6 +108,7 @@ def main(page: ft.Page):
     def ver_cartas(e):
         pantalla = ft.Column(
             controls=[
+                ft.Container(height=20),
                 ft.Text("Cartas para ti 💌", size=25, weight="bold", color="#D63384"),
                 ft.Container(
                     content=ft.Text(
@@ -139,19 +146,18 @@ def main(page: ft.Page):
     )
 
     # ==========================================
-    # PANTALLA INICIAL (PORTADA)
+    # PANTALLA INICIAL
     # ==========================================
     def ir_a_menu_desde_portada(e):
         cambiar_pantalla(menu_principal)
 
     portada = ft.Column(
         controls=[
-            # 1. TEXTO DE ARRIBA
             ft.Text("Bienvenida", size=35, weight="bold", color="#D63384"),
 
-            # 2. LOGO CORAZÓN I²
             ft.Stack(
                 controls=[
+                    # CAMBIO: Icono como texto. El Stack no lleva alignment aquí.
                     ft.Icon("favorite_border", size=140, color="red"),
                     ft.Container(
                         content=ft.Text("I²", size=50, weight="bold", color="#D63384"),
@@ -162,11 +168,8 @@ def main(page: ft.Page):
                 ],
             ),
 
-            # 3. TEXTO DE ABAJO
             ft.Text("a nuestra historia", size=25, weight="bold", color="black"),
-            
             ft.Container(height=20),
-            
             ft.ElevatedButton("Empezar ❤️", on_click=ir_a_menu_desde_portada, bgcolor="#D63384", color="white")
         ],
         alignment=ft.MainAxisAlignment.CENTER,
@@ -182,6 +185,8 @@ def main(page: ft.Page):
 
     page.add(portada_container)
 
-# Al final del archivo:
+# --- INICIO PARA RENDER ---
+if __name__ == "__main__":
+    # Esta configuración es crítica para que funcione en la nube
     port = int(os.environ.get("PORT", 8080))
     ft.app(target=main, view=ft.WEB_BROWSER, port=port, host="0.0.0.0", assets_dir="assets")
