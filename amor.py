@@ -49,8 +49,9 @@ def main(page: ft.Page):
                         ft.Icon("timer", size=40, color="white"),
                         ft.Text(f"{dias_juntos} Días", size=40, weight="bold", color="white"),
                         ft.Text("compartiendo risas", size=15, color="white")
-                    ], horizontal_alignment="center"),
-                    padding=20, bgcolor="#D63384", border_radius=15, alignment=ft.alignment.center
+                    ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
+                    # CAMBIO: ft.Alignment(0, 0) en lugar del atajo .center
+                    padding=20, bgcolor="#D63384", border_radius=15, alignment=ft.Alignment(0, 0)
                 ),
                 ft.Container(height=10),
                 ft.Text("Y contando... ❤️", size=18, italic=True),
@@ -60,7 +61,8 @@ def main(page: ft.Page):
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=10
         )
-        vista = ft.Container(content=pantalla, alignment=ft.alignment.center, expand=True)
+        # CAMBIO: ft.Alignment(0, 0)
+        vista = ft.Container(content=pantalla, alignment=ft.Alignment(0, 0), expand=True)
         cambiar_pantalla(vista)
 
     # ==========================================
@@ -150,17 +152,20 @@ def main(page: ft.Page):
     portada = ft.Column(
         controls=[
             ft.Text("Bienvenida", size=35, weight="bold", color="#D63384"),
+
             ft.Stack(
                 controls=[
                     ft.Icon("favorite_border", size=140, color="red"),
                     ft.Container(
                         content=ft.Text("I²", size=50, weight="bold", color="#D63384"),
                         width=140, height=140,
-                        alignment=ft.alignment.center,
+                        # CAMBIO: ft.Alignment(0, 0)
+                        alignment=ft.Alignment(0, 0),
                         padding=ft.padding.only(bottom=10)
                     )
                 ],
             ),
+
             ft.Text("a nuestra historia", size=25, weight="bold", color="black"),
             ft.Container(height=20),
             ft.ElevatedButton("Empezar ❤️", on_click=ir_a_menu_desde_portada, bgcolor="#D63384", color="white")
@@ -172,7 +177,8 @@ def main(page: ft.Page):
     
     portada_container = ft.Container(
         content=portada,
-        alignment=ft.alignment.center,
+        # CAMBIO: ft.Alignment(0, 0)
+        alignment=ft.Alignment(0, 0),
         expand=True
     )
 
@@ -181,5 +187,5 @@ def main(page: ft.Page):
 # --- INICIO PARA RENDER ---
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
-    # AQUÍ ESTÁ EL CAMBIO MÁGICO: ft.AppView.WEB_BROWSER
+    # CAMBIO: Usamos ft.AppView.WEB_BROWSER que es lo correcto ahora
     ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=port, host="0.0.0.0", assets_dir="assets")
