@@ -1,5 +1,6 @@
 import flet as ft
 from datetime import datetime
+import os
 
 def main(page: ft.Page):
     # --- CONFIGURACIÓN GENERAL ---
@@ -12,6 +13,17 @@ def main(page: ft.Page):
     # --- TUS DATOS ---
     FECHA_ANIVERSARIO = datetime(2025, 2, 14) 
     NOMBRE_PAREJA = "Mi Amor"
+
+    # --- MÚSICA DE FONDO 🎵 ---
+    # Creamos el reproductor de audio
+    musica = ft.Audio(
+        src="cancion.mp3", # Busca este archivo en tu carpeta
+        autoplay=True,     # Empieza a sonar automático
+        volume=1.0,        # Volumen al 100%
+        balance=0,         # Balance centrado
+    )
+    # Lo añadimos a la "superposición" de la página (para que suene siempre)
+    page.overlay.append(musica) 
 
     # --- NAVEGACIÓN ---
     def cambiar_pantalla(nueva_pantalla):
@@ -33,7 +45,7 @@ def main(page: ft.Page):
                 ft.Divider(),
                 ft.Container(
                     content=ft.Column([
-                        ft.Icon(ft.icons.TIMER, size=40, color="white"),
+                        ft.Icon("timer", size=40, color="white"),
                         ft.Text(f"{dias_juntos} Días", size=40, weight="bold", color="white"),
                         ft.Text("compartiendo risas", size=15, color="white")
                     ], horizontal_alignment="center"),
@@ -61,7 +73,7 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.Column([
                         ft.Text("Nuestro primer viaje", size=18, weight="bold"),
-                        ft.Icon(ft.icons.AIRPLANE_TICKET, size=50, color="blue"), 
+                        ft.Icon("airplane_ticket", size=50, color="blue"), 
                         ft.Text("¿Recuerdas cuando nos perdimos en aquel pueblo?", size=14)
                     ]),
                     padding=15, bgcolor="white", border_radius=10
@@ -70,7 +82,7 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.Column([
                         ft.Text("Esa cena especial", size=18, weight="bold"),
-                        ft.Icon(ft.icons.RESTAURANT, size=50, color="orange"), 
+                        ft.Icon("restaurant", size=50, color="orange"), 
                         ft.Text("La mejor pizza del mundo.", size=14)
                     ]),
                     padding=15, bgcolor="white", border_radius=10
@@ -127,7 +139,7 @@ def main(page: ft.Page):
     )
 
     # ==========================================
-    # PANTALLA INICIAL (PORTADA MODIFICADA)
+    # PANTALLA INICIAL (PORTADA)
     # ==========================================
     def ir_a_menu_desde_portada(e):
         cambiar_pantalla(menu_principal)
@@ -135,17 +147,17 @@ def main(page: ft.Page):
     portada = ft.Column(
         controls=[
             # 1. TEXTO DE ARRIBA
-            ft.Text("Bienvenida",italic=True ,size=35, weight="bold", color="black"),
+            ft.Text("Bienvenida", size=35, weight="bold", color="#D63384"),
 
             # 2. LOGO CORAZÓN I²
             ft.Stack(
                 controls=[
-                    ft.Icon(ft.icons.FAVORITE_BORDER, size=140, color="red"),
+                    ft.Icon("favorite_border", size=140, color="red"),
                     ft.Container(
-                        content=ft.Text("I²", size=50, weight="bold", color="#4B0082"),
+                        content=ft.Text("I²", size=50, weight="bold", color="#D63384"),
                         width=140, height=140,
                         alignment=ft.alignment.center,
-                        padding=ft.padding.only(left=20)
+                        padding=ft.padding.only(bottom=10)
                     )
                 ],
             ),
@@ -153,10 +165,8 @@ def main(page: ft.Page):
             # 3. TEXTO DE ABAJO
             ft.Text("a nuestra historia", size=25, weight="bold", color="black"),
             
-            # Espacio extra antes del botón
             ft.Container(height=20),
             
-            # 4. BOTÓN
             ft.ElevatedButton("Empezar ❤️", on_click=ir_a_menu_desde_portada, bgcolor="#D63384", color="white")
         ],
         alignment=ft.MainAxisAlignment.CENTER,
@@ -172,4 +182,6 @@ def main(page: ft.Page):
 
     page.add(portada_container)
 
-ft.app(target=main)
+# Al final del archivo:
+    port = int(os.environ.get("PORT", 8080))
+    ft.app(target=main, view=ft.WEB_BROWSER, port=port, host="0.0.0.0", assets_dir="assets")
