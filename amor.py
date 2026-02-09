@@ -4,9 +4,9 @@ import os
 
 def main(page: ft.Page):
      # Configuración para web
-    #page.theme = ft.Theme(
-        #color_scheme_seed=ft.colors.PINK,
-        #page_transitions=ft.PageTransitionTheme.NONE)
+    page.theme = ft.Theme(
+        color_scheme_seed=ft.colors.PINK,
+        page_transitions=ft.PageTransitionTheme.NONE)
     # --- CONFIGURACIÓN DE LA PÁGINA ---
     page.title = "Nuestro Aniversario"
     page.bgcolor = "#FFF0F5" 
@@ -173,7 +173,8 @@ if __name__ == "__main__":
         assets_dir="assets",
         # Agrega estas líneas:
         route_url_strategy="path"
-    )"assets")
+    )"assets"
+
 
 
 
