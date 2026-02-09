@@ -3,6 +3,10 @@ from datetime import datetime
 import os
 
 def main(page: ft.Page):
+     # Configuración para web
+    page.theme = ft.Theme(
+        color_scheme_seed=ft.colors.PINK,
+        page_transitions=ft.PageTransitionTheme.NONE
     # --- CONFIGURACIÓN DE LA PÁGINA ---
     page.title = "Nuestro Aniversario"
     page.bgcolor = "#FFF0F5" 
@@ -154,6 +158,20 @@ def main(page: ft.Page):
 
     page.add(pantalla_portada)
 
+# Reemplaza las últimas líneas del archivo con:
+
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=port, host="0.0.0.0", assets_dir="assets")
+    # Para desarrollo local
+    # ft.app(target=main)
+    
+    # Para despliegue web
+    ft.app(
+        target=main,
+        view=ft.WEB_BROWSER,
+        port=8080,
+        host="0.0.0.0",
+        assets_dir="assets",
+        # Agrega estas líneas:
+        route_url_strategy="path"
+    )"assets")
+
