@@ -12,9 +12,6 @@ def main(page: ft.Page):
     page.padding = 0
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = "#FFF0F5"
-    page.fonts = {
-        "Pacifico": "https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-    }
     
     # Para Render: no usar window dimensions (no aplica en web)
     # page.window_width = 390  # Comentar para web
@@ -201,7 +198,7 @@ def main(page: ft.Page):
                     ft.Text(historia["texto"], size=14),
                     ft.Container(height=10),
                     ft.Text(historia["fecha"], size=12, color="#888", italic=True)
-                ]),
+                    ]),
                 padding=20,
                 bgcolor="white",
                 border_radius=15,
@@ -381,8 +378,7 @@ Para siempre tuyo.""",
             # Texto de bienvenida
             ft.Column([
                 ft.Text("Bienvenida", 
-                       size=42, weight="bold", color="#D63384",
-                       font_family="Pacifico"),
+                       size=42, weight="bold", color="#D63384"),
                 ft.Text("a Nuestra Historia", 
                        size=24, color="#333", weight="bold"),
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
@@ -450,17 +446,17 @@ Para siempre tuyo.""",
     page.add(portada_container)
 
 # ==========================================
-# CONFIGURACIÓN PARA RENDER
+# CONFIGURACIÓN PARA RENDER (VERSIÓN CORREGIDA)
 # ==========================================
 if __name__ == "__main__":
     # Configuración específica para Render
     port = int(os.environ.get("PORT", 8080))
     
+    # Usar la API correcta de Flet para la versión actual
+    # En versiones más recientes, ft.app funciona sin parámetro view
     ft.app(
         target=main,
-        view=ft.WEB_BROWSER,
         port=port,
         host="0.0.0.0",
-        assets_dir="assets",
-        route_url_strategy="path"  # Importante para navegación web
+        assets_dir="assets"
     )
