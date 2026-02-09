@@ -13,10 +13,6 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.bgcolor = "#FFF0F5"
     
-    # Para Render: no usar window dimensions (no aplica en web)
-    # page.window_width = 390  # Comentar para web
-    # page.window_height = 844  # Comentar para web
-    
     # --- TUS DATOS (PERSONALIZA AQUÍ) ---
     FECHA_ANIVERSARIO = datetime(2025, 2, 14) 
     NOMBRE_PAREJA = "Mi Amor"
@@ -24,8 +20,8 @@ def main(page: ft.Page):
     # --- MÚSICA DE FONDO (CON MANEJO DE ERRORES) ---
     try:
         musica = ft.Audio(
-            src="https://assets.mixkit.co/music/preview/mixkit-loving-you-117.mp3",  # URL alternativa si no tienes cancion.mp3
-            autoplay=False,  # Cambiado a False para evitar problemas en móviles
+            src="https://assets.mixkit.co/music/preview/mixkit-loving-you-117.mp3",
+            autoplay=False,
             volume=0.7,
         )
         page.overlay.append(musica)
@@ -103,7 +99,7 @@ def main(page: ft.Page):
                     padding=30,
                     bgcolor="#D63384",
                     border_radius=20,
-                    alignment=ft.alignment.center,
+                    alignment=ft.alignment.center,  # CORREGIDO
                     width=300
                 ),
                 
@@ -155,7 +151,12 @@ def main(page: ft.Page):
             scroll=ft.ScrollMode.AUTO
         )
         
-        pantalla = ft.Container(content=contenido, padding=20, expand=True)
+        pantalla = ft.Container(
+            content=contenido, 
+            padding=20, 
+            expand=True,
+            alignment=ft.alignment.top_center  # CORREGIDO
+        )
         cambiar_pantalla(pantalla)
 
     # ==========================================
@@ -198,7 +199,7 @@ def main(page: ft.Page):
                     ft.Text(historia["texto"], size=14),
                     ft.Container(height=10),
                     ft.Text(historia["fecha"], size=12, color="#888", italic=True)
-                    ]),
+                ]),
                 padding=20,
                 bgcolor="white",
                 border_radius=15,
@@ -221,7 +222,11 @@ def main(page: ft.Page):
             scroll=ft.ScrollMode.AUTO
         )
         
-        cambiar_pantalla(ft.Container(content=contenido, padding=20))
+        cambiar_pantalla(ft.Container(
+            content=contenido, 
+            padding=20,
+            alignment=ft.alignment.top_center  # CORREGIDO
+        ))
 
     # ==========================================
     # 3. CARTAS PERSONALIZADAS
@@ -265,7 +270,7 @@ Para siempre tuyo.""",
                 
                 ft.Container(height=30),
                 
-                # Botón para añadir más cartas (funcionalidad futura)
+                # Botón para añadir más cartas
                 ft.Container(
                     content=ft.Column([
                         ft.Icon(ft.icons.ADD_CIRCLE_OUTLINE, size=40, color="#D63384"),
@@ -279,7 +284,12 @@ Para siempre tuyo.""",
             horizontal_alignment=ft.CrossAxisAlignment.CENTER
         )
         
-        pantalla = ft.Container(content=contenido, padding=20, expand=True)
+        pantalla = ft.Container(
+            content=contenido, 
+            padding=20, 
+            expand=True,
+            alignment=ft.alignment.top_center  # CORREGIDO
+        )
         cambiar_pantalla(pantalla)
 
     # ==========================================
@@ -304,7 +314,7 @@ Para siempre tuyo.""",
             border_radius=20,
             width=280,
             height=120,
-            alignment=ft.alignment.center,
+            alignment=ft.alignment.center,  # CORREGIDO
             animate=ft.animation.Animation(300, ft.AnimationCurve.EASE_IN_OUT)
         )
         botones_menu.append(boton)
@@ -367,7 +377,7 @@ Para siempre tuyo.""",
                     ft.Container(
                         content=ft.Text("I²", size=70, weight="bold", color="white"),
                         width=180, height=180,
-                        alignment=ft.alignment.center,
+                        alignment=ft.alignment.center,  # CORREGIDO
                     )
                 ]),
                 animate_scale=ft.animation.Animation(1000, ft.AnimationCurve.BOUNCE_OUT)
@@ -439,21 +449,21 @@ Para siempre tuyo.""",
             end=ft.alignment.bottom_center,
             colors=["#FFF0F5", "#FFE4E9", "#FFD1DC"]
         ),
-        expand=True
+        expand=True,
+        alignment=ft.alignment.center  # CORREGIDO
     )
 
     # Inicializar con portada
     page.add(portada_container)
 
 # ==========================================
-# CONFIGURACIÓN PARA RENDER (VERSIÓN CORREGIDA)
+# CONFIGURACIÓN PARA RENDER
 # ==========================================
 if __name__ == "__main__":
     # Configuración específica para Render
     port = int(os.environ.get("PORT", 8080))
     
-    # Usar la API correcta de Flet para la versión actual
-    # En versiones más recientes, ft.app funciona sin parámetro view
+    # Usar la API correcta de Flet
     ft.app(
         target=main,
         port=port,
