@@ -2,7 +2,7 @@ import flet as ft
 from datetime import datetime
 import os
 import logging
-
+import flet_patch 
 # Configurar logging para ver errores en Render
 logging.basicConfig(level=logging.INFO)
 
@@ -470,3 +470,4 @@ if __name__ == "__main__":
         host="0.0.0.0",
         assets_dir="assets"
     )
+
