@@ -7,8 +7,6 @@ def main(page: ft.Page):
     # --- CONFIGURACIÓN BÁSICA ---
     page.title = "Para Mi Amor ❤️"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.scroll = ft.ScrollMode.AUTO
-    page.on_error = lambda e: print(f"Flet page error: {e.data}")
     
     # --- TUS DATOS ---
     FECHA_ANIVERSARIO = datetime(2025, 2, 14) 
@@ -221,12 +219,6 @@ def main(page: ft.Page):
     page.add(portada)
 
 if __name__ == "__main__":
-    # Arranque compatible con despliegue web (Render/Heroku/Fly).
+    # Permite ejecutar en local y en plataformas tipo Render/Heroku.
     port = int(os.getenv("PORT", "8550"))
-    ft.app(
-        target=main,
-        assets_dir="assets",
-        port=port,
-        host="0.0.0.0",
-        view=ft.AppView.WEB_BROWSER,
-    )
+    ft.app(target=main, assets_dir="assets", port=port, host="0.0.0.0")
