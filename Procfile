@@ -1,1 +1,1 @@
-web: python amor.py
+web: FLET_FORCE_WEB_SERVER=true python amor.py
