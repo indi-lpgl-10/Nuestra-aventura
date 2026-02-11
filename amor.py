@@ -1,6 +1,7 @@
-import flet as ft
-from datetime import datetime
 import os
+from datetime import datetime
+
+import flet as ft
 
 def main(page: ft.Page):
     # --- CONFIGURACIÓN BÁSICA ---
@@ -217,12 +218,7 @@ def main(page: ft.Page):
     # Iniciar
     page.add(portada)
 
-# ==========================================
-# CONFIGURACIÓN MÍNIMA PARA RENDER
-# ==========================================
 if __name__ == "__main__":
-    ft.app(
-        target=main,
-        port=int(os.environ.get("PORT", 8080)),
-        host="0.0.0.0"
-    )
+    # Permite ejecutar en local y en plataformas tipo Render/Heroku.
+    port = int(os.getenv("PORT", "8550"))
+    ft.app(target=main, assets_dir="assets", port=port, host="0.0.0.0")
